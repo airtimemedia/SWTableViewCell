@@ -37,6 +37,34 @@
     [self addObject:button];
 }
 
+- (void)sw_addUtilityButtonWithColor:(UIColor *)color icon:(UIImage *)icon title:(NSString*)title
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.backgroundColor = color;
+    [button setImage:icon forState:UIControlStateNormal];
+    [button setTitle:title forState:UIControlStateNormal];
+    if ([@"Unmute" isEqualToString:title])
+        [button setTitleColor:[PTKColor redActionColor] forState:UIControlStateNormal];
+    else
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+
+    [button.titleLabel setAdjustsFontSizeToFitWidth:NO];
+    button.titleLabel.font = [UIFont systemFontOfSize:10.0f];
+
+    // the space between the image and text
+    CGFloat spacing = 6.0;
+
+    // lower the text and push it left so it appears centered below the image
+    CGSize imageSize = button.imageView.image.size;
+    button.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (imageSize.height + spacing), 0.0);
+
+    // raise the image and push it right so it appears centered above the text
+    CGSize titleSize = [button.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: button.titleLabel.font}];
+    button.imageEdgeInsets = UIEdgeInsetsMake(- (titleSize.height + spacing), 0.0, 0.0, - titleSize.width);
+
+    [self addObject:button];
+}
+
 - (void)sw_addUtilityButtonWithColor:(UIColor *)color normalIcon:(UIImage *)normalIcon selectedIcon:(UIImage *)selectedIcon {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = color;
